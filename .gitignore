@@ -5,3 +5,4 @@ images/pgsql/data/pgsql/*
 data/run/*
 data/logs/*
 data/www/*
+!data/www
