@@ -1,0 +1,43 @@
+data:
+  image: borgius/data
+  volumes:
+    - ./data:/data
+
+dnsmasq:
+    image: andyshinn/dnsmasq
+    ports:
+        - "53:53"
+        - "53:53/udp"
+    cap_add:
+        - NET_ADMIN
+    volumes:
+        - "data/config/dnsmasq.d:/etc/dnsmasq.d"
+
+pgsql:
+  image: borgius/pgsql
+  volumes_from:
+    - data
+  environment:
+    PGDATA: /data/pgsql
+    POSTGRES_DB: mydb
+    POSTGRES_USER: dbdev
+    POSTGRES_PASSWORD: devdbpassword
+  ports:
+    - "5432:5432"
+
+php:
+  image: borgius/php
+  volumes_from:
+    - data
+  links:
+    - pgsql
+
+nginx:
+  image: borgius/nginx
+  name: nginx
+  volumes_from:
+    - data
+  links:
+    - php
+  ports:
+    - "80:80"

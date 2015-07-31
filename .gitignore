@@ -1,0 +1,7 @@
+data/pgsql/*
+!data/pgsql/pg_dba.conf
+images/pgsql/data/pgsql/*
+
+data/run/*
+data/logs/*
+data/www/*
