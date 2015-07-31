@@ -1,2 +1,2 @@
 # bodos
-BOot2Docker Orchestration for Mac
+BOot2Docker OrcheStration for Mac
