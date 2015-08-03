@@ -32,7 +32,7 @@ RUN cd /tmp/ && \
 RUN docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-jpeg-dir=/ --with-png-dir=/usr/include/
 
 # Install ext
-RUN docker-php-ext-install ftp bcmath bz2 dba gd mbstring mcrypt pdo pdo_mysql pdo_pgsql iconv\
+RUN docker-php-ext-install ftp bcmath bz2 dba gd mbstring mcrypt pgsql mysql pdo pdo_mysql pdo_pgsql iconv\
     xdebug xhprof memcached-2.2.0 memcache
 
 COPY build/zzz_xdebug.ini /usr/local/etc/php/conf.d/zzz_xdebug.ini
@@ -66,6 +66,6 @@ RUN cd /tmp && wget http://pyyaml.org/download/libyaml/yaml-0.1.5.tar.gz && tar 
  && echo "extension=yaml.so" > /usr/local/etc/php/conf.d/yaml.ini
 
 ADD build/etc /usr/local/etc
-COPY start.sh /usr/local/bin/start.sh
+COPY build/start.sh /usr/local/bin/start.sh
 
 CMD ["start.sh"]
