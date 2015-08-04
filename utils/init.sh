@@ -12,8 +12,8 @@ $utils/docker_rm_all.sh
 data=$(realpath $utils/../data)
 data_name=$(basename `realpath $utils/..`)
 DOCKERHOST=$(boot2docker ip)
-boot2docker ssh "sudo rm -rf $data && sudo rm -rf /var/lib/docker/$data_name"
-boot2docker ssh "sudo mkdir -p $data && sudo mv $data /var/lib/docker/$data_name && sudo chown -R docker /var/lib/docker/$data_name && sudo ln -s /var/lib/docker/$data_name $data"
+boot2docker ssh "sudo rm -rf $data && sudo rm -rf /var/lib/docker/data/$data_name"
+boot2docker ssh "sudo mkdir -p $data && sudo mv $data /var/lib/docker/data/$data_name && sudo chown -R docker /var/lib/docker/data/$data_name && sudo ln -s /var/lib/docker/data/$data_name $data"
 
 echo Sync folder $data
 docker-osx-dev sync_only -s $data -l DEBUG

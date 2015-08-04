@@ -73,4 +73,4 @@ RUN cd /tmp && wget https://github.com/alexeyrybak/blitz/archive/0.9.1.tar.gz &&
 ADD build/etc /usr/local/etc
 COPY build/start.sh /usr/local/bin/start.sh
 
-CMD ["start.sh"]
+#CMD ["start.sh"]
