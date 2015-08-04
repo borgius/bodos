@@ -65,6 +65,11 @@ RUN cd /tmp && wget http://pyyaml.org/download/libyaml/yaml-0.1.5.tar.gz && tar 
  && ./configure && make install && pecl install yaml \
  && echo "extension=yaml.so" > /usr/local/etc/php/conf.d/yaml.ini
 
+RUN cd /tmp && wget https://github.com/alexeyrybak/blitz/archive/0.9.1.tar.gz && tar zxvf 0.9.1.tar.gz && cd blitz-0.9.1 \
+ && phpize && ./configure && make install \
+ && echo "extension=blitz.so" > /usr/local/etc/php/conf.d/blitz.ini
+
+
 ADD build/etc /usr/local/etc
 COPY build/start.sh /usr/local/bin/start.sh
 
