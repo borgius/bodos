@@ -68,4 +68,4 @@ RUN cd /tmp && wget http://pyyaml.org/download/libyaml/yaml-0.1.5.tar.gz && tar 
 ADD build/etc /usr/local/etc
 COPY build/start.sh /usr/local/bin/start.sh
 
-CMD ["start.sh"]
+#CMD ["start.sh"]

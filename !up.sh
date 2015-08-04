@@ -9,6 +9,7 @@ sync_pid=$!
 echo $sync_pid
 echo docker-compose $cmd $2 $3 $4 $5
 #$base/utils/docker_rm_all.sh
+$(boot2docker shellinit 2> /dev/null)
 docker-compose $cmd $2 $3 $4 $5
 kill -9 $(ps ax | grep "docker-osx-dev\|$data/www" | grep -v grep | awk '{ print $1 }') 2 > /dev/null
 cd $base
