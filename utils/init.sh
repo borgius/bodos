@@ -2,23 +2,26 @@
 
 echo Warning !!! Will be remove all data from containers !!!
 echo Ctrl+C to exit. Sleeping 5 sec...
-sleep 5
+#sleep 5
 
 utils=$(dirname `realpath $0`)
 source $utils/0config.sh
+boot2docker shellinit >$utils/shellinit.sh 2> /dev/null
+source $utils/shellinit.sh
 
 $utils/boot2docker-up.sh
-$utils/docker_rm_all.sh
+$utils/docker_rm_all.sh 2> /dev/null
 data=$(realpath $utils/../data)
 data_name=$(basename `realpath $utils/..`)
 DOCKERHOST=$(boot2docker ip)
 boot2docker ssh "sudo rm -rf $data && sudo rm -rf /var/lib/docker/data/$data_name"
-boot2docker ssh "sudo mkdir -p $data && sudo mv $data /var/lib/docker/data/$data_name && sudo chown -R docker /var/lib/docker/data/$data_name && sudo ln -s /var/lib/docker/data/$data_name $data"
+boot2docker ssh "sudo mkdir -p $data && sudo chown -R docker $data && sudo mkdir -p /var/lib/docker/data"
+boot2docker ssh "sudo mv $data /var/lib/docker/data/$data_name && sudo chown -R docker /var/lib/docker/data/$data_name && sudo ln -s /var/lib/docker/data/$data_name $data"
 
 echo Sync folder $data
-docker-osx-dev sync_only -s $data -l DEBUG
+docker-osx-dev sync_only -s $data/www -s $data/config -l WARN
 
-boot2docker ssh "cd $data && pwd && mkdir -p pgsql && mkdir -p logs && mkdir -p www && mkdir -p run"
+boot2docker ssh "cd $data && pwd && mkdir -p pgsql && mkdir -p logs && mkdir -p www && mkdir -p run && mkdir -p config"
 boot2docker ssh "cd $data/config/dnsmasq.d && echo 'address=/$BODOS_TLD/$DOCKERHOST' > dnsmasq.conf"
 
 $utils/add-resolver.sh

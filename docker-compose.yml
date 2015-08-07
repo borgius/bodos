@@ -16,12 +16,12 @@ dnsmasq:
 pgsql:
   image: borgius/pgsql
   volumes_from:
-    - data
+      - data
   environment:
     PGDATA: /data/pgsql
     POSTGRES_DB: mydb
-    POSTGRES_USER: dbdev
-    POSTGRES_PASSWORD: devdbpassword
+    POSTGRES_USER: me
+    POSTGRES_PASSWORD: password
   ports:
     - "5432:5432"
 
