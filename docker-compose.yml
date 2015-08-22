@@ -25,16 +25,72 @@ pgsql:
   ports:
     - "5432:5432"
 
+mysql:
+  image: mysql:latest
+  expose:
+    - "3306"
+  ports:
+    - "3306:3306"
+  volumes_from:
+      - data
+  volumes:
+    - "data/mysql:/var/lib/mysql"
+  environment:
+    MYSQL_DATABASE: mydb
+    MYSQL_USER: me
+    MYSQL_PASSWORD: password
+    MYSQL_ROOT_PASSWORD: password
+
+sphinx:
+  image: leodido/sphinxsearch:2.2.9
+  command: ./bin/searchd.sh
+  links:
+    - mysql:mysql
+  volumes_from:
+    - data
+  volumes:
+    #- docker/sphinx/conf/sphinx.conf:/usr/local/etc/sphinx.conf
+    - data/sphinx/diz:/var/diz/sphinx
+    - data/sphinx/run:/var/run/sphinx
+    - data/sphinx/lib:/var/lib/sphinx
+    - data/sphinx/log:/var/log/sphinx
+    - data/sphinx/idx:/var/idx/sphinx
+
+beanstalkd:
+  image: chriskite/beanstalkd
+  ports:
+    - "11300:11300"
+  volumes_from:
+    - data
+  volumes:
+    - data/beanstalkd:/data
+
+couchbase:
+  image: couchbase/server
+  ports:
+    - "8091:8091"
+    - "8092:8093"
+    - "8093:8093"
+  volumes_from:
+    - data
+  volumes:
+    - data/couchbase:/opt/couchbase/var
+
 php:
   image: borgius/php56-fpm
   volumes_from:
     - data
   links:
     - pgsql
+    - mysql
+    - sphinx
+    - beanstalkd
 
 nginx:
   image: borgius/nginx
   name: nginx
+#  volumes:
+#    - "data/etc/nginx-default.conf:/etc/nginx/host.d/default.conf"
   volumes_from:
     - data
   links:

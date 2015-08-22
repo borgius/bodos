@@ -1,6 +1,11 @@
 #!/bin/sh
 utils=$(dirname `realpath $0`)
 $utils/share-umount.sh
-pwd=$(realpath $utils/../data)
-data=$(basename `dirname $pwd`)
-echo boot2docker ssh "if [ -d /var/lib/docker/data/$data ]; then sudo mkdir -p $pwd && sudo rm -rf $pwd && sudo ln -s /var/lib/docker/data/$data $pwd; fi"
+
+data=$(realpath $utils/../data)
+data_name=$(basename `realpath $utils/..`)
+
+boot2docker ssh "sudo [ ! -L $data ] && sudo rm -rf $data"
+boot2docker ssh "sudo chown -R docker /var/lib/docker/data/$data_name && sudo ln -s /var/lib/docker/data/$data_name $data"
+
+

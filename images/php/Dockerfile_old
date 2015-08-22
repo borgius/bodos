@@ -1,8 +1,9 @@
-FROM php:5.6.12-fpm
+FROM ubuntu:14.04
 MAINTAINER borgius <e3w2q1@gmail.com>
 
 WORKDIR /root
 
+ENV PHP_VERSION=5.6.12
 
 RUN apt-get update && apt-get install -y php5-dev unzip wget git re2c \
   libssl-dev libbz2-dev libfreetype6-dev libjpeg62-turbo-dev libpng12-dev \

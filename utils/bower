@@ -1,0 +1,6 @@
+#!/bin/sh
+#. ./shellinit.sh
+$(boot2docker shellinit 2> /dev/null)
+root=$(realpath $(dirname $(readlink $0))/..)
+p=$(echo $PWD | sed "s#$root##g")
+docker exec -ti dockerfile/nodejs-bower-gulp bash -c "cd $p && php $1 $2 $3 $4"

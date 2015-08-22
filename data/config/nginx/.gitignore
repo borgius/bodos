@@ -1,4 +1,5 @@
 *
 !.gitignore
 !test.dev.conf
-!test2.dev.conf
+!pgsql.dev.conf
+!mysql.dev.conf
