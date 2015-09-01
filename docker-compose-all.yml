@@ -25,6 +25,37 @@ pgsql:
   ports:
     - "5432:5432"
 
+mysql:
+  image: mysql:latest
+  expose:
+    - "3306"
+  ports:
+    - "3306:3306"
+  volumes_from:
+      - data
+  volumes:
+    - "data/mysql:/var/lib/mysql"
+  environment:
+    MYSQL_DATABASE: mydb
+    MYSQL_USER: me
+    MYSQL_PASSWORD: password
+    MYSQL_ROOT_PASSWORD: password
+
+sphinx:
+  image: leodido/sphinxsearch:2.2.9
+  command: ./bin/searchd.sh
+  links:
+    - mysql:mysql
+  volumes_from:
+    - data
+  volumes:
+    #- docker/sphinx/conf/sphinx.conf:/usr/local/etc/sphinx.conf
+    - data/sphinx/diz:/var/diz/sphinx
+    - data/sphinx/run:/var/run/sphinx
+    - data/sphinx/lib:/var/lib/sphinx
+    - data/sphinx/log:/var/log/sphinx
+    - data/sphinx/idx:/var/idx/sphinx
+
 beanstalkd:
   image: chriskite/beanstalkd
   ports:
@@ -51,8 +82,9 @@ php:
     - data
   links:
     - pgsql
+    - mysql
+    - sphinx
     - beanstalkd
-    - couchbase
 
 nginx:
   image: borgius/nginx
