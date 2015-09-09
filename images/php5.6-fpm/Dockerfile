@@ -50,7 +50,7 @@ RUN cd /tmp && unzip phpredis-2.2.7.zip && cd phpredis-2.2.7 && \
 # && cd /tmp/php-uv && phpize && ./configure && make && make install \
 # && echo "extension=uv.so" > /usr/local/etc/php/conf.d/uv.ini 
 
-RUN git clone --depth=1 git://github.com/phalcon/cphalcon.git /tmp/cphalcon \
+RUN git clone -b 2.1.x --depth=1 git://github.com/phalcon/cphalcon.git /tmp/cphalcon \
  && cd /tmp/cphalcon/build \
  && ./install \
  && echo "extension=phalcon.so" > /usr/local/etc/php/conf.d/phalcon2.ini 
