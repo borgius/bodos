@@ -2,8 +2,8 @@
 
 # Top-level domain
 export BODOS_TLD=dev
-
-# Sync type rsync|vbox
-export BODOS_SYNC=rsync
+export MACHINE=default
+export DOCKERHOST=$(docker-machine ip $MACHINE)
+echo $DOCKERHOST
 
 alias composer="docker run -i -t -v \$PWD:/srv ubermuda/composer"

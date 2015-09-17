@@ -1,7 +1,6 @@
 #!/bin/sh
 utils=$(dirname `realpath $0`)
 source $utils/0config.sh
-DOCKERHOST=$(boot2docker ip)
 
 function add_resolver {
     echo Add resolver for TLD *.$BODOS_TLD

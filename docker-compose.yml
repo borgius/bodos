@@ -2,6 +2,7 @@ data:
   image: borgius/data
   volumes:
     - ./data:/data
+    - /var/run:/data/run
 
 dnsmasq:
     image: andyshinn/dnsmasq
@@ -10,8 +11,9 @@ dnsmasq:
         - "53:53/udp"
     cap_add:
         - NET_ADMIN
-    volumes:
-        - "data/config/dnsmasq.d:/etc/dnsmasq.d"
+#    volumes:
+#        - ./data/config/dnsmasq.conf:/etc/dnsmasq.conf
+    command: -S /dev/192.168.99.100
 
 pgsql:
   image: borgius/pgsql
@@ -32,7 +34,7 @@ beanstalkd:
   volumes_from:
     - data
   volumes:
-    - data/beanstalkd:/data
+    - ./data/beanstalkd:/data
 
 couchbase:
   image: couchbase/server
@@ -43,10 +45,10 @@ couchbase:
   volumes_from:
     - data
   volumes:
-    - data/couchbase:/opt/couchbase/var
+    - ./data/couchbase:/opt/couchbase/var
 
 php:
-  image: borgius/php56-fpm
+  image: borgius/php-phalcon
   volumes_from:
     - data
   links:
@@ -56,9 +58,6 @@ php:
 
 nginx:
   image: borgius/nginx
-  name: nginx
-#  volumes:
-#    - "data/etc/nginx-default.conf:/etc/nginx/host.d/default.conf"
   volumes_from:
     - data
   links:

@@ -11,7 +11,7 @@ dnsmasq:
     cap_add:
         - NET_ADMIN
     volumes:
-        - "data/config/dnsmasq.d:/etc/dnsmasq.d"
+        - "data/config/dnsmasq.conf:/etc/dnsmasq.conf"
 
 pgsql:
   image: borgius/pgsql
