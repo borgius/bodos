@@ -11,9 +11,9 @@ dnsmasq:
         - "53:53/udp"
     cap_add:
         - NET_ADMIN
-#    volumes:
-#        - ./data/config/dnsmasq.conf:/etc/dnsmasq.conf
-    command: -S /dev/192.168.99.100
+    volumes:
+        - ./data/config/dnsmasq.conf:/etc/dnsmasq.conf
+#    command: -S /dev/192.168.99.100
 
 pgsql:
   image: borgius/pgsql

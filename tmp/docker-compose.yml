@@ -1,0 +1,16 @@
+data:
+  image: borgius/data
+  volumes:
+    - ../data:/data
+    - /var/run:/data/run
+
+dnsmasq:
+    image: andyshinn/dnsmasq
+    ports:
+        - "53:53"
+        - "53:53/udp"
+    cap_add:
+        - NET_ADMIN
+    volumes:
+        - ../data/config/dnsmasq.conf:/etc/dnsmasq.conf
+#    command: -S /dev/192.168.99.100
