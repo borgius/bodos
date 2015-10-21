@@ -8,6 +8,7 @@ RUN apt-get update && apt-get install -y php5-dev unzip wget git re2c \
   libssl-dev libbz2-dev libfreetype6-dev libjpeg62-turbo-dev libpng12-dev \
   libmcrypt-dev libpq-dev libsqlite3-dev libuv-dev libxml2-dev \
   libmemcached-dev zlib1g-dev libncurses5-dev \
+  postgresql-client-common postgresql-client-9.4 \
   --no-install-recommends && rm -r /var/lib/apt/lists/*
 
 # Install memcached
@@ -72,8 +73,6 @@ RUN cd /tmp && wget https://github.com/alexeyrybak/blitz/archive/0.9.1.tar.gz &&
 ENV COMPOSER_HOME /root/composer
 ENV COMPOSER_VERSION master
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
-# Display version information
-RUN composer --version
 
 ADD build/etc /usr/local/etc
 COPY build/start.sh /usr/local/bin/start.sh
